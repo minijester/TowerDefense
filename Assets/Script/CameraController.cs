@@ -10,6 +10,10 @@ public class CameraController : MonoBehaviour {
     public float scrollSpeed = 5f;
     public float minY = 10f;
     public float maxY = 80f;
+    public float minX = 0f;
+    public float maxX = 100f;
+    public float minZ = 10f;
+    public float maxZ = 165f;
 
     private void Update()
     {
@@ -35,7 +39,7 @@ public class CameraController : MonoBehaviour {
         }
         if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
         {
-            transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);           
         }
         // use to zoom
         float scroll = Input.GetAxis("Mouse ScrollWheel");

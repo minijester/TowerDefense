@@ -6,7 +6,7 @@ public class WaveSpawner : MonoBehaviour {
 
     public Transform enemy;
     public Transform spawnPoint;
-    public float timeBetweenWaves = 5f;
+    public float timeBetweenWaves = 10f;
     private float countdown = 2f;
     private int waveIndex = 1;
     private float timeWaingForEachEnemy = 0.5f;
@@ -21,7 +21,9 @@ public class WaveSpawner : MonoBehaviour {
         }
 
         countdown -= Time.deltaTime;
-        countdownText.text = Mathf.Floor(countdown).ToString();
+        countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+
+        countdownText.text = string.Format("{0:00.0}", countdown);
     }
 
     IEnumerator SpawnWave() // can wait when using IEnumberator
