@@ -2,10 +2,11 @@
 
 public class Enemy : MonoBehaviour {
 
-    public float speed = 10f;
+    public float speed = 50f;
     private Transform target;
     private int waypointIndex = 0;
-
+    public int health = 100;
+    public int value = 50;
     private void Start()
     {
         target = Waypoint.points[0];
@@ -25,11 +26,32 @@ public class Enemy : MonoBehaviour {
     void GetNextWayPoint()
     {
         if(waypointIndex >= Waypoint.points.Length - 1) {
-            Destroy(gameObject);
+            EndPath();
             return;
         }
         waypointIndex++;
         target = Waypoint.points[waypointIndex];
     }
 
+    void EndPath()
+    {
+        PlayerStat.lives -= 1;
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+
+        if(health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        PlayerStat.Money += value;
+        Destroy(gameObject);
+    }
 }
