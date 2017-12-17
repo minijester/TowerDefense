@@ -4,19 +4,29 @@ using UnityEngine;
 public class Turrent : MonoBehaviour {
 
     private Transform target;
-
+    private Enemy targetEnemy;
     [Header("Attribute")]
     public float range = 15f;
+
+    [Header("Use Bullets (default")]
     private float fireRate = 1f;
     private float fireCountdown = 0f;
+    public GameObject bulletPrefab;
+
+    [Header("Use Laser")]
+    public bool useLaser = false;
+    public int damageOverTime = 60;
+    public float slowAmount = 0.5f;
+
+    public LineRenderer lineRenderer;
+    public ParticleSystem impactEffect;
+
 
     [Header("Unity Setup Fields")]
     public string enemyTag = "Enemy";
 
     public float turnSpeed = 10f;
     public Transform partToRotate;
-
-    public GameObject bulletPrefab;
     public Transform firePoint;
 
 	// Use this for initialization
@@ -43,6 +53,7 @@ public class Turrent : MonoBehaviour {
         if (nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
+            targetEnemy = nearestEnemy.GetComponent<Enemy>();
         }
         else
         {
@@ -54,24 +65,62 @@ public class Turrent : MonoBehaviour {
 	void Update () {
 		if(target == null)
         {
+            if (useLaser)
+            {
+                if (lineRenderer.enabled)
+                {
+                    lineRenderer.enabled = false;
+                    impactEffect.Stop();
+                }
+            }
             return;
         }
+        LockOnTarget();
+        if (useLaser)
+        {
+            Laser();
+        }
+        else
+        {
+            if (fireCountdown <= 0)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
+
+            fireCountdown -= Time.deltaTime;
+        }
+        
+	}
+
+    void LockOnTarget()
+    {
+        // target Lock on
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir); // how do we need to rotate our self to look that position.
 
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation,Time.deltaTime * turnSpeed).eulerAngles; // x,y,z of rotation.
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles; // x,y,z of rotation.
         //Vector3 rotation = lookRotation.eulerAngles;
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-        
+    }
 
-        if(fireCountdown <= 0)
+    void Laser()
+    {
+        targetEnemy.TakeDamage(damageOverTime * Time.deltaTime * 10);
+        targetEnemy.Slow(slowAmount);
+        if (!lineRenderer.enabled)
         {
-            Shoot();
-            fireCountdown = 1f / fireRate;
+            lineRenderer.enabled = true;
+            impactEffect.Play();
         }
+        lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, target.position);
 
-        fireCountdown -= Time.deltaTime;
-	}
+        Vector3 dir = firePoint.position - target.position;
+        impactEffect.transform.position = target.position + dir.normalized;
+        impactEffect.transform.rotation = Quaternion.LookRotation(dir);
+        
+    }
 
     void Shoot()
     {

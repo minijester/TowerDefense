@@ -138,15 +138,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246777834616572}
-  m_LocalRotation: {x: 0, y: 0.9685865, z: 0, w: -0.24867687}
-  m_LocalPosition: {x: 85.35004, y: 0.45726314, z: 19.46613}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 60.173668, y: 0.5, z: 69.96331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109480662026652}
   - {fileID: 4176515686602102}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4869926992673298
 Transform:
   m_ObjectHideFlags: 1
@@ -252,7 +252,7 @@ MonoBehaviour:
   range: 30
   enemyTag: Enemy
   turnSpeed: 20
-  partToRotate: {fileID: 4483259973833294}
+  partToRotate: {fileID: 4176515686602102}
   bulletPrefab: {fileID: 1720598334704110, guid: f9340c1a15cf4854c8a7a846f3421e4b,
     type: 2}
-  firePoint: {fileID: 4483259973833294}
+  firePoint: {fileID: 4869926992673298}

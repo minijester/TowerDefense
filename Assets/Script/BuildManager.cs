@@ -6,11 +6,13 @@ public class BuildManager : MonoBehaviour {
 
     private TurretBlueprint turrentToBuild;
 
-    [Header("TurretPrefab")]
+    /*[Header("TurretPrefab")]
 
     public GameObject standardTurretPrefab;
     public GameObject fastTurretPrefab;
     public GameObject missileLauncherPrefab;
+    public GameObject laserBeam;*/
+
 
     [Header("Effect")]
     public GameObject buildEffect;

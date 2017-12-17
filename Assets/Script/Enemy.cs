@@ -2,51 +2,30 @@
 
 public class Enemy : MonoBehaviour {
 
-    public float speed = 50f;
-    private Transform target;
-    private int waypointIndex = 0;
-    public int health = 100;
+    public float startSpeed = 10f;
+
+    [HideInInspector]
+    public float speed;
+
+    public float health = 100f;
     public int value = 50;
+
     private void Start()
     {
-        target = Waypoint.points[0];
+        speed = startSpeed;
     }
-
-    private void Update()
-    {
-        Vector3 dir = target.position - transform.position; // point to move to target.
-        transform.Translate(dir.normalized * speed * Time.deltaTime);
-
-        if(Vector3.Distance(transform.position, target.position) <= 0.2f)
-        {
-            GetNextWayPoint();
-        }
-    }
-
-    void GetNextWayPoint()
-    {
-        if(waypointIndex >= Waypoint.points.Length - 1) {
-            EndPath();
-            return;
-        }
-        waypointIndex++;
-        target = Waypoint.points[waypointIndex];
-    }
-
-    void EndPath()
-    {
-        PlayerStat.lives -= 1;
-        Destroy(gameObject);
-    }
-
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         health -= amount;
-
-        if(health <= 0)
+        if(health <= 0f)
         {
             Die();
         }
+    }
+
+    public void Slow(float amount)
+    {
+        speed = startSpeed * (1f - amount);
     }
 
     void Die()
