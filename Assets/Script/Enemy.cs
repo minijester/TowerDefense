@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour {
 
     void Die()
     {
-        PlayerStat.Money += value;
+        PlayerStat.money += value;
         Destroy(gameObject);
     }
 }

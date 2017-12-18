@@ -16,6 +16,11 @@ public class EnemyMovement : MonoBehaviour {
 
     private void Update()
     {
+        if (GameManager.gameEnded)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Vector3 dir = target.position - transform.position; // point to move to target.
         transform.Translate(dir.normalized * enemy.speed * Time.deltaTime);
 

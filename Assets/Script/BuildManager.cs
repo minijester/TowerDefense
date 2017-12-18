@@ -5,17 +5,8 @@ public class BuildManager : MonoBehaviour {
     public static BuildManager instance;
 
     private TurretBlueprint turrentToBuild;
-
-    /*[Header("TurretPrefab")]
-
-    public GameObject standardTurretPrefab;
-    public GameObject fastTurretPrefab;
-    public GameObject missileLauncherPrefab;
-    public GameObject laserBeam;*/
-
-
-    [Header("Effect")]
-    public GameObject buildEffect;
+    private Node selectedNode;
+    public NodeUI nodeUI;
     
     private void Awake()
     {
@@ -30,7 +21,8 @@ public class BuildManager : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(1))
         {
-            resetTurret();
+            ResetTurret();
+            ResetNode();
         }
     }
 
@@ -38,34 +30,37 @@ public class BuildManager : MonoBehaviour {
     public bool CanBuild { get { return turrentToBuild != null; } }
     // if turrentToBuild = null - false, if not true.
 
-    public bool HasMoney { get { return PlayerStat.Money >= turrentToBuild.cost; } }
-
-    public void BuildTurretOn(Node node)
-    {
-        if (PlayerStat.Money < turrentToBuild.cost)
-        {
-            Debug.Log("Not enough money to build");
-            return;
-        }
-        else
-        {
-            PlayerStat.Money -= turrentToBuild.cost;
-            GameObject turret = (GameObject) Instantiate(turrentToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
-            node.turret = turret;
-
-            GameObject effect = (GameObject) Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
-            Destroy(effect, 5f);
-            Debug.Log("Turrent build! Money left " + PlayerStat.Money);
-        }
-    }
+    public bool HasMoney { get { return PlayerStat.money >= turrentToBuild.cost; } }
 
     public void SelectTurretToBuild(TurretBlueprint turret)
     {
         turrentToBuild = turret;
+        selectedNode = null;
+        nodeUI.Hide();
     }
 
-    public void resetTurret()
+    public void SelectNode(Node node)
+    {
+
+        selectedNode = node;
+        turrentToBuild = null;
+
+        nodeUI.SetTarget(node);
+    }
+
+    public void ResetTurret()
     {
         turrentToBuild = null;
+    }
+
+    public void ResetNode()
+    {
+        selectedNode = null;
+        nodeUI.Hide();
+    }
+
+    public TurretBlueprint GetTurretToBuild()
+    {
+        return turrentToBuild;
     }
 }

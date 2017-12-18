@@ -9,7 +9,7 @@ public class Turrent : MonoBehaviour {
     public float range = 15f;
 
     [Header("Use Bullets (default")]
-    private float fireRate = 1f;
+    public float fireRate = 1f;
     private float fireCountdown = 0f;
     public GameObject bulletPrefab;
 
@@ -63,6 +63,11 @@ public class Turrent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameManager.gameEnded)
+        {
+            this.enabled = false;
+            return;
+        }
 		if(target == null)
         {
             if (useLaser)

@@ -3,10 +3,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    private bool gameEnded = false;
-	
-	// Update is called once per frame
-	void Update () {
+    public static bool gameEnded;
+    public GameObject gameOverUI;
+
+    private void Start()
+    {
+        gameEnded = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (gameEnded)
         {
             return;
@@ -20,5 +26,7 @@ public class GameManager : MonoBehaviour {
     void EndGame()
     {
         gameEnded = true;
+        gameOverUI.SetActive(true);
+        
     }
 }

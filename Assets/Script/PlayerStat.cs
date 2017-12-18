@@ -3,15 +3,19 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour {
 
-    public static int Money;
+    public static int money;
     public int startMoney = 500;
 
     public static int lives = 0;
     public int startLife = 20;
+
+    public static int round;
+
     private void Start()
     {
-        Money = startMoney;
+        money = startMoney;
         lives = startLife;
+        round = 0;
     }
 
 }
