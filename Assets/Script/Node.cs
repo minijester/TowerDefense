@@ -101,7 +101,7 @@ public class Node : MonoBehaviour {
     {
         PlayerStat.money += turretBlueprint.sellCost;
         Destroy(turret);
-        GameObject effect = (GameObject)Instantiate(turretBlueprint.upgradeEffect, GetBuildPosition(), Quaternion.identity);
+        GameObject effect = (GameObject)Instantiate(turretBlueprint.sellEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
     }
 

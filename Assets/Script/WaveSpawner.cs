@@ -4,21 +4,30 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour {
 
-    public Transform enemy;
+    public GameObject enemy;
     public Transform spawnPoint;
     public float timeBetweenWaves = 10f;
     private float countdown = 2f;
-    private int waveIndex = 1;
+    private int waveIndex;
     private float timeWaingForEachEnemy = 0.5f;
     public Text countdownText;
 
+    private void Start()
+    {
+        waveIndex = 1;
+    }
+
     private void Update()
     {
+
+        
         if (GameManager.gameEnded)
         {
             this.enabled = false;
             return;
         }
+        
+
         if (countdown <= 0f)
         {
             StartCoroutine(SpawnWave());
@@ -33,13 +42,13 @@ public class WaveSpawner : MonoBehaviour {
 
     IEnumerator SpawnWave() // can wait when using IEnumberator
     {
-        waveIndex++;
         PlayerStat.round++;
         for (int i=0; i < waveIndex; i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(timeWaingForEachEnemy);
         }
+        waveIndex++;
         
     }
 

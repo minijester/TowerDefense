@@ -12,8 +12,9 @@ public class Enemy : MonoBehaviour {
 
     private void Start()
     {
-        speed = startSpeed;
+        speed = startSpeed; 
     }
+
     public void TakeDamage(float amount)
     {
         health -= amount;
@@ -33,4 +34,6 @@ public class Enemy : MonoBehaviour {
         PlayerStat.money += value;
         Destroy(gameObject);
     }
+
+
 }
